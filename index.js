@@ -1,5 +1,5 @@
 function add(a, b){
-    return a + b;
+    return Number(a) + Number(b);
 }
 
 function substract(a, b){
@@ -38,7 +38,12 @@ let num1, num2, operator = '';
 
 buttons.forEach((button) => {
    button.addEventListener('click', () => {
-       if(button.textContent.match(/[0-9]/)){
+       if(button.textContent.match(/[0-9]/) && 
+            (
+                (displayNumber.textContent.length < 12 && displayNumber.textContent.indexOf('.') === -1) || 
+                (displayNumber.textContent.substring(displayNumber.textContent.indexOf('.')).length < 5)
+            )
+         ) {
           if(operator === '=') {
             displayNumber.textContent = '';
             operator = '';
@@ -48,11 +53,19 @@ buttons.forEach((button) => {
     //    }
             
        } else if(button.textContent.match(/\./)) {
+            
+            if(operator === '=') {
+                displayNumber.textContent = '';
+                operator = '';
+                num1 = undefined;
+            } 
+
             if(displayNumber.textContent === '') displayNumber.textContent += 0;
+            
             if(displayNumber.textContent.indexOf('.') === -1) {
                 displayNumber.textContent += button.textContent;
-                console.log(displayNumber.textContent);
-                console.log(displayNumber.textContent.indexOf('.'));
+                // console.log(displayNumber.textContent);
+                // console.log(displayNumber.textContent.indexOf('.'));
             }
 
             // console.log(displayNumber.textContent);
@@ -85,10 +98,19 @@ buttons.forEach((button) => {
                 else if (operator === '*') num1 = operate(multiply, num1, num2);
                 else if (operator === '/') num1 = operate(divide, num1, num2);
             } 
+            
             operator = button.textContent;
             num2 = undefined;
             displayNumber.textContent = '';
-            if(num1 !== 0) displayOperation.textContent = num1 + operator;
+
+            if (num1 > Number.MAX_SAFE_INTEGER) {
+                num1 = undefined;
+                num2 = undefined;
+                displayOperation.textContent = '';
+                displayNumber.textContent = '';
+                alert('Error, number out of range');
+            } 
+            else if(num1 !== 0) displayOperation.textContent = num1 + operator;
             
             if (operator === '=') {
                 displayNumber.textContent = num1;
