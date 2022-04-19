@@ -38,7 +38,7 @@ let num1, num2, operator = '';
 
 buttons.forEach((button) => {
    button.addEventListener('click', () => {
-       if(button.textContent.match(/[0-9]/) && 
+       if(button.attributes[1].textContent.match(/[0-9]/) && 
             (
                 (displayNumber.textContent.length < 12 && displayNumber.textContent.indexOf('.') === -1) || 
                 (displayNumber.textContent.substring(displayNumber.textContent.indexOf('.')).length < 5)
@@ -49,10 +49,10 @@ buttons.forEach((button) => {
             operator = '';
             num1 = undefined;
           } 
-          displayNumber.textContent += button.textContent;
+          displayNumber.textContent += button.attributes[1].textContent;
     //    }
             
-       } else if(button.textContent.match(/\./)) {
+       } else if(button.attributes[1].textContent.match(/\./)) {
             
             if(operator === '=') {
                 displayNumber.textContent = '';
@@ -63,23 +63,23 @@ buttons.forEach((button) => {
             if(displayNumber.textContent === '') displayNumber.textContent += 0;
             
             if(displayNumber.textContent.indexOf('.') === -1) {
-                displayNumber.textContent += button.textContent;
+                displayNumber.textContent += button.attributes[1].textContent;
                 // console.log(displayNumber.textContent);
                 // console.log(displayNumber.textContent.indexOf('.'));
             }
 
             // console.log(displayNumber.textContent);
             // console.log((displayNumber.textContent.substring(0,(displayNumber.textContent.indexOf('.'))).match(/'.'/)));
-            // if(!(button.textContent.substring(0,(button.textContent.indexOf('.'))).match(/'.'/))){
+            // if(!(button.attributes[1].textContent.substring(0,(button.textContent.indexOf('.'))).match(/'.'/))){
             //        console.log("ya hay un punto!");
 
             // }
-        //     && !(button.textContent.substring(0,(button.textContent.indexOf('.'))).match(/'.'/))) {
-        //     displayNumber.textContent += 0 + button.textContent;
-        //   } else if (button.textContent.substring(0,(button.textContent.indexOf('.'))).match(/'.'/)) {
+        //     && !(button.attributes[1].textContent.substring(0,(button.textContent.indexOf('.'))).match(/'.'/))) {
+        //     displayNumber.textContent += 0 + button.attributes[1].textContent;
+        //   } else if (button.attributes[1].textContent.substring(0,(button.textContent.indexOf('.'))).match(/'.'/)) {
         //     displayNumber.textContent = deleteLast(displayNumber.textContent);
         //   }
-       } else if(button.textContent.match(/x/)){
+       } else if(button.attributes[1].textContent.match(/x/)){
            
         //   let numberSplitted = displayNumber.textContent.split('');
         //   let numberJoined = numberSplitted.splice(displayNumber.textContent.length-1,1);
@@ -88,7 +88,7 @@ buttons.forEach((button) => {
             displayNumber.textContent = deleteLast(displayNumber.textContent);
             num1 = Number(displayNumber.textContent);
 
-       } else if(button.textContent.match(/[\+\-*\/\=]/)){
+       } else if(button.attributes[1].textContent.match(/[\+\-*\/\=]/)){
         
             if(num1 === undefined) num1 = Number(displayNumber.textContent);
             else {
@@ -99,7 +99,7 @@ buttons.forEach((button) => {
                 else if (operator === '/') num1 = operate(divide, num1, num2);
             } 
             
-            operator = button.textContent;
+            operator = button.attributes[1].textContent;
             num2 = undefined;
             displayNumber.textContent = '';
 
@@ -116,7 +116,7 @@ buttons.forEach((button) => {
                 displayNumber.textContent = num1;
                 displayOperation.textContent = '';
             }
-       } else if(button.textContent.match(/Clear/)){
+       } else if(button.attributes[1].textContent.match(/clear/)){
             num1 = undefined;
             num2 = undefined;
             displayOperation.textContent = '';
