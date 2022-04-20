@@ -15,31 +15,33 @@
     <title>TOP - Calculator</title>
 </head>
 <body>
-   <div id="calculator">
-       <div class="display" id="display">
-           <div id="operation"></div>
-           <div id="number"></div>
-       </div>
-        <div class="keyboard">
-            <button class="button_number" data-input="1" id="btn-1">1</button>
-            <button class="button_number" data-input="2" id="btn-2">2</button>
-            <button class="button_number" data-input="3" id="btn-3">3</button>
-            <button class="button_number" data-input="4" id="btn-4">4</button>
-            <button class="button_number" data-input="5" id="btn-5">5</button>
-            <button class="button_number" data-input="6" id="btn-6">6</button>
-            <button class="button_number" data-input="7" id="btn-7">7</button>
-            <button class="button_number" data-input="8" id="btn-8">8</button>
-            <button class="button_number" data-input="9" id="btn-9">9</button>
-            <button class="button_number" data-input="." id="btn-11">⬝</button>
-            <button class="button_number" data-input="0" id="btn-10">0</button>
-            <button class="button_operator" data-input="*" id="btn-14">⛌</button>
-            <button class="button_operator" data-input="-" id="btn-13">⚊</button>
-            <button class="button_operator" data-input="+" id="btn-12">+</button>
-            <button class="button_operator" data-input="/" id="btn-15">/</button>
-            <button class="button_operator" data-input="x" id="btn-17">⌫</button>
-            <button class="button_operator" data-input="=" id="btn-16">⚌</button>
-            <button class="button_operator" data-input="clear" id="btn-18">🯀</button>
+    <div id="calculator">
+        <img src="./media/img/top_logo.svg" alt="top logo" class="logo">
+        <div class="display" id="display">
+            <div id="operation"></div>
+            <div id="number"></div>
         </div>
-   </div>
+        <div class="keyboard">
+            <button data-input="1" class="button_number" id="btn-1">1</button>
+            <button data-input="2" class="button_number" id="btn-2">2</button>
+            <button data-input="3" class="button_number" id="btn-3">3</button>
+            <button data-input="4" class="button_number" id="btn-4">4</button>
+            <button data-input="5" class="button_number" id="btn-5">5</button>
+            <button data-input="6" class="button_number" id="btn-6">6</button>
+            <button data-input="7" class="button_number" id="btn-7">7</button>
+            <button data-input="8" class="button_number" id="btn-8">8</button>
+            <button data-input="9" class="button_number" id="btn-9">9</button>
+            <button data-input="." class="button_number" id="btn-11">⬝</button>
+            <button data-input="0" class="button_number" id="btn-10">0</button>
+            <button data-input="*" class="button_operator" id="btn-14">⛌</button>
+            <button data-input="-" class="button_operator" id="btn-13">⚊</button>
+            <button data-input="+" class="button_operator" id="btn-12">+</button>
+            <button data-input="/" class="button_operator" id="btn-15">/</button>
+            <button data-input="d" class="button_operator" id="btn-17">⌫</button>
+            <button data-input="Enter" class="button_operator" id="btn-16">⚌</button>
+            <button data-input="x" class="button_operator" id="btn-18">⏻</button>
+        </div>
+        <p class="info">Delete: 'd' - Equal: 'Enter' Clear:'x'</p>
+    </div>
 </body>
 </html>

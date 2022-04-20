@@ -15,10 +15,15 @@ body {
     justify-content: center;
     align-items: center;
     width: 600px;
-    height: 700px;
+    height: 750px;
     margin: 5rem auto;
     border-radius: 50px;
     background: gray;
+}
+
+.logo {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 
 .display {
@@ -46,4 +51,10 @@ body {
 .button_operator{
     font-family: 'Noto Sans Symbols 2', sans-serif;
     font-size: 2rem;
+}
+
+.info {
+    font-family: 'Noto Sans Symbols 2', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 1000;
 }

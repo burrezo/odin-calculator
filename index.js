@@ -25,106 +25,106 @@ function deleteLast(numberString){
     return numberSplitted.join('');
 }
 
+const body = document.querySelector('body');
 const buttons = document.querySelectorAll('[id^="btn-"]');
 const display = document.getElementById('display');
 
 const displayOperation = document.getElementById('operation');
 const displayNumber = document.getElementById('number');
 
-// display.appendChild(pOperation);
-// display.appendChild(pNumber);
+const keysCalc = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.', '+', '-', '*', '/', 'd', 'Enter', 'x']
 
-let num1, num2, operator = '';
+function calculator (e) {
 
-buttons.forEach((button) => {
-   button.addEventListener('click', () => {
-       if(button.attributes[1].textContent.match(/[0-9]/) && 
-            (
-                (displayNumber.textContent.length < 12 && displayNumber.textContent.indexOf('.') === -1) || 
-                (displayNumber.textContent.substring(displayNumber.textContent.indexOf('.')).length < 5)
-            )
-         ) {
-          if(operator === '=') {
+    let keyPush = '';
+
+    // if (e.type === 'click') console.log(e.type, e.target.attributes[0].textContent);
+    // else console.log(e.type, e.key, keysCalc.includes(e.key));
+
+    if (e.type === 'click') keyPush = e.target.attributes[0].textContent;
+    else if (e.type === 'keydown') {
+        if (keysCalc.includes(e.key)) keyPush = e.key;
+        else keyPush = '';
+    }
+
+    if(keyPush.match(/[0-9]/) && 
+        (
+            (displayNumber.textContent.length < 12 && displayNumber.textContent.indexOf('.') === -1) || 
+            (displayNumber.textContent.substring(displayNumber.textContent.indexOf('.')).length < 5)
+        )
+      ) 
+    {
+        if(operator === 'Enter') {
             displayNumber.textContent = '';
             operator = '';
             num1 = undefined;
-          } 
-          displayNumber.textContent += button.attributes[1].textContent;
-    //    }
-            
-       } else if(button.attributes[1].textContent.match(/\./)) {
-            
-            if(operator === '=') {
-                displayNumber.textContent = '';
-                operator = '';
-                num1 = undefined;
-            } 
-
-            if(displayNumber.textContent === '') displayNumber.textContent += 0;
-            
-            if(displayNumber.textContent.indexOf('.') === -1) {
-                displayNumber.textContent += button.attributes[1].textContent;
-                // console.log(displayNumber.textContent);
-                // console.log(displayNumber.textContent.indexOf('.'));
-            }
-
-            // console.log(displayNumber.textContent);
-            // console.log((displayNumber.textContent.substring(0,(displayNumber.textContent.indexOf('.'))).match(/'.'/)));
-            // if(!(button.attributes[1].textContent.substring(0,(button.textContent.indexOf('.'))).match(/'.'/))){
-            //        console.log("ya hay un punto!");
-
-            // }
-        //     && !(button.attributes[1].textContent.substring(0,(button.textContent.indexOf('.'))).match(/'.'/))) {
-        //     displayNumber.textContent += 0 + button.attributes[1].textContent;
-        //   } else if (button.attributes[1].textContent.substring(0,(button.textContent.indexOf('.'))).match(/'.'/)) {
-        //     displayNumber.textContent = deleteLast(displayNumber.textContent);
-        //   }
-       } else if(button.attributes[1].textContent.match(/x/)){
-           
-        //   let numberSplitted = displayNumber.textContent.split('');
-        //   let numberJoined = numberSplitted.splice(displayNumber.textContent.length-1,1);
-        //   displayNumber.textContent = numberSplitted.join('');
-        //     num1 = Number(displayNumber.textContent);
-            displayNumber.textContent = deleteLast(displayNumber.textContent);
-            num1 = Number(displayNumber.textContent);
-
-       } else if(button.attributes[1].textContent.match(/[\+\-*\/\=]/)){
+        } 
+        displayNumber.textContent += keyPush;
         
-            if(num1 === undefined) num1 = Number(displayNumber.textContent);
-            else {
-                num2 = Number(displayNumber.textContent);
-                if (operator === '+') num1 = operate(add, num1, num2);
-                else if (operator === '-') num1 = operate(substract, num1, num2);
-                else if (operator === '*') num1 = operate(multiply, num1, num2);
-                else if (operator === '/') num1 = operate(divide, num1, num2);
-            } 
-            
-            operator = button.attributes[1].textContent;
-            num2 = undefined;
+    } else if(keyPush.match(/\./)) {
+        
+        if(operator === 'Enter') {
             displayNumber.textContent = '';
+            operator = '';
+            num1 = undefined;
+        } 
 
-            if (num1 > Number.MAX_SAFE_INTEGER) {
-                num1 = undefined;
-                num2 = undefined;
-                displayOperation.textContent = '';
-                displayNumber.textContent = '';
-                alert('Error, number out of range');
-            } 
-            else if(num1 !== 0) displayOperation.textContent = num1 + operator;
-            
-            if (operator === '=') {
-                displayNumber.textContent = num1;
-                displayOperation.textContent = '';
-            }
-       } else if(button.attributes[1].textContent.match(/clear/)){
+        if(displayNumber.textContent === '') displayNumber.textContent += 0;
+        
+        if(displayNumber.textContent.indexOf('.') === -1) {
+            displayNumber.textContent += keyPush;
+        }
+
+    } else if(keyPush.match(/d/)){
+        
+        displayNumber.textContent = deleteLast(displayNumber.textContent);
+        num1 = Number(displayNumber.textContent);
+
+    } else if(keyPush.match(/[\+\-*\/Enter]/)){
+    
+        if(num1 === undefined) num1 = Number(displayNumber.textContent);
+        else {
+            num2 = Number(displayNumber.textContent);
+            if (operator === '+') num1 = operate(add, num1, num2);
+            else if (operator === '-') num1 = operate(substract, num1, num2);
+            else if (operator === '*') num1 = operate(multiply, num1, num2);
+            else if (operator === '/') num1 = operate(divide, num1, num2);
+        } 
+        
+        operator = keyPush;
+        num2 = undefined;
+        displayNumber.textContent = '';
+
+        if (num1 > Number.MAX_SAFE_INTEGER) {
             num1 = undefined;
             num2 = undefined;
             displayOperation.textContent = '';
             displayNumber.textContent = '';
-       }
+            alert('Error, number out of range');
+        } 
+        else if(num1 !== 0) displayOperation.textContent = num1 + operator;
+        
+        if (operator === 'Enter') {
+            displayNumber.textContent = num1;
+            displayOperation.textContent = '';
+        }
 
-   });
-});
+    } else if(keyPush.match(/x/)) {
 
+        num1 = undefined;
+        num2 = undefined;
+        operator = '';
+        displayOperation.textContent = '';
+        displayNumber.textContent = '';
+    }
 
-// console.log(buttons);
+   }
+   
+   
+let num1, num2, operator = '';
+
+body.addEventListener('keydown', (e) => {calculator(e)}, false);
+
+buttons.forEach((button) => {
+        button.addEventListener('click', (e) => {calculator(e)}, false);
+    });
