@@ -18,6 +18,7 @@
     <div id="calculator">
         <img src="./media/img/top_logo.svg" alt="top logo" class="logo">
         <div class="display" id="display">
+            <div class="numLockStatus" id="numLockStatus"></div>
             <div id="operation"></div>
             <div id="number"></div>
         </div>
@@ -37,11 +38,16 @@
             <button data-input="-" class="button_operator" id="btn-13">⚊</button>
             <button data-input="+" class="button_operator" id="btn-12">+</button>
             <button data-input="/" class="button_operator" id="btn-15">/</button>
-            <button data-input="d" class="button_operator" id="btn-17">⌫</button>
-            <button data-input="Enter" class="button_operator" id="btn-16">⚌</button>
-            <button data-input="x" class="button_operator" id="btn-18">⏻</button>
+            <button data-input="d" class="button_operator" id="btn-17">⌫
+                <p class="btn-key">d</p>
+            </button>
+            <button data-input="Enter" class="button_operator" id="btn-16">⚌
+                <p class="btn-key">Enter</p>
+            </button>
+            <button data-input="x" class="button_operator" id="btn-18">⏻
+                <p class="btn-key">x</p>
+            </button>
         </div>
-        <p class="info">Delete: 'd' - Equal: 'Enter' Clear:'x'</p>
     </div>
 </body>
 </html>

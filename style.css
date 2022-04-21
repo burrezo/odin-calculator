@@ -17,8 +17,9 @@ body {
     width: 600px;
     height: 750px;
     margin: 5rem auto;
-    border-radius: 50px;
+    border-radius: 30px;
     background: gray;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 .logo {
@@ -41,7 +42,31 @@ body {
     width: 500px;
     display: grid;
     grid-template-columns: repeat(3,1fr);
-    
+    gap: 0.5rem;
+    margin-bottom: 3rem;
+}
+
+#display,
+#btn-16,
+#btn-17,
+#btn-18 {
+    position: relative;
+}
+
+.numLockStatus {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.5rem;
+    color: gray;
+}
+
+.btn-key {
+    position: absolute;
+    top: -15px;
+    right: 5px;
+    font-size: 1.05rem;
+    color: grey;
 }
 
 .button_number {
@@ -53,7 +78,21 @@ body {
     font-size: 2rem;
 }
 
+.button_number:active,
+.button_operator:active {
+    transform: translateY(4px);
+}
+
+.simulate_click {
+    background-color: #b1b1b9;
+    transform: translateY(4px);
+    scale: 0.93;
+}
+
 .info {
+    display: flex;
+    justify-content: space-around;
+    width: 500px;
     font-family: 'Noto Sans Symbols 2', sans-serif;
     font-size: 1.2rem;
     font-weight: 1000;

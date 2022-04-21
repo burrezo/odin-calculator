@@ -29,102 +29,127 @@ const body = document.querySelector('body');
 const buttons = document.querySelectorAll('[id^="btn-"]');
 const display = document.getElementById('display');
 
-const displayOperation = document.getElementById('operation');
-const displayNumber = document.getElementById('number');
+const numLockStatus = document.getElementById('numLockStatus');
+const displayUp = document.getElementById('operation');
+const displayDown = document.getElementById('number');
 
-const keysCalc = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.', '+', '-', '*', '/', 'd', 'Enter', 'x']
+const KEYS_CALCULATOR = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.', '*', '-', '+', '/', 'd', 'Enter', 'x']
 
-function calculator (e) {
+function calculator(e) {
 
-    let keyPush = '';
+    let keyPushed = '';
 
     // if (e.type === 'click') console.log(e.type, e.target.attributes[0].textContent);
-    // else console.log(e.type, e.key, keysCalc.includes(e.key));
+    // else console.log(e.type, e.key, KEYS_CALCULATOR.includes(e.key));
 
-    if (e.type === 'click') keyPush = e.target.attributes[0].textContent;
+    if (e.type === 'click') keyPushed = e.target.attributes[0].textContent;
+
     else if (e.type === 'keydown') {
-        if (keysCalc.includes(e.key)) keyPush = e.key;
-        else keyPush = '';
+
+        if (KEYS_CALCULATOR.includes(e.key)) {
+
+            keyPushed = e.key;
+
+            buttons[KEYS_CALCULATOR.indexOf(e.key)].classList.add("simulate_click");
+        }
+        else keyPushed = '';
+
+        
+        if(!(e.getModifierState('NumLock'))) numLockStatus.innerHTML = 'NumLock off';
+        else numLockStatus.innerHTML = '';
     }
 
-    if(keyPush.match(/[0-9]/) && 
+    if(keyPushed.match(/[0-9]/) && 
         (
-            (displayNumber.textContent.length < 12 && displayNumber.textContent.indexOf('.') === -1) || 
-            (displayNumber.textContent.substring(displayNumber.textContent.indexOf('.')).length < 5)
+            (displayDown.textContent.length < 12 && displayDown.textContent.indexOf('.') === -1) || 
+            (displayDown.textContent.substring(displayDown.textContent.indexOf('.')).length < 5)
         )
       ) 
     {
         if(operator === 'Enter') {
-            displayNumber.textContent = '';
+            
+            displayDown.textContent = '';
             operator = '';
             num1 = undefined;
         } 
-        displayNumber.textContent += keyPush;
+        displayDown.textContent += keyPushed;
         
-    } else if(keyPush.match(/\./)) {
+    } else if(keyPushed.match(/\./)) {
         
         if(operator === 'Enter') {
-            displayNumber.textContent = '';
+
+            displayDown.textContent = '';
             operator = '';
             num1 = undefined;
         } 
 
-        if(displayNumber.textContent === '') displayNumber.textContent += 0;
+        if(displayDown.textContent === '') displayDown.textContent += 0;
         
-        if(displayNumber.textContent.indexOf('.') === -1) {
-            displayNumber.textContent += keyPush;
+        if(displayDown.textContent.indexOf('.') === -1) {
+
+            displayDown.textContent += keyPushed;
         }
 
-    } else if(keyPush.match(/d/)){
+    } else if(keyPushed.match(/d/)){
         
-        displayNumber.textContent = deleteLast(displayNumber.textContent);
-        num1 = Number(displayNumber.textContent);
+        displayDown.textContent = deleteLast(displayDown.textContent);
+        num1 = Number(displayDown.textContent);
 
-    } else if(keyPush.match(/[\+\-*\/Enter]/)){
+    } else if(keyPushed.match(/[\+\-*\/Enter]/)){
     
-        if(num1 === undefined) num1 = Number(displayNumber.textContent);
+        if(num1 === undefined) num1 = Number(displayDown.textContent);
+        
         else {
-            num2 = Number(displayNumber.textContent);
+
+            num2 = Number(displayDown.textContent);
             if (operator === '+') num1 = operate(add, num1, num2);
             else if (operator === '-') num1 = operate(substract, num1, num2);
             else if (operator === '*') num1 = operate(multiply, num1, num2);
             else if (operator === '/') num1 = operate(divide, num1, num2);
         } 
         
-        operator = keyPush;
+        operator = keyPushed;
         num2 = undefined;
-        displayNumber.textContent = '';
+        displayDown.textContent = '';
 
         if (num1 > Number.MAX_SAFE_INTEGER) {
+
             num1 = undefined;
             num2 = undefined;
-            displayOperation.textContent = '';
-            displayNumber.textContent = '';
+            displayUp.textContent = '';
+            displayDown.textContent = '';
             alert('Error, number out of range');
         } 
-        else if(num1 !== 0) displayOperation.textContent = num1 + operator;
+        else if(num1 !== 0) displayUp.textContent = num1 + operator;
         
         if (operator === 'Enter') {
-            displayNumber.textContent = num1;
-            displayOperation.textContent = '';
+
+            displayDown.textContent = num1;
+            displayUp.textContent = '';
         }
 
-    } else if(keyPush.match(/x/)) {
+    } else if(keyPushed.match(/x/)) {
 
         num1 = undefined;
         num2 = undefined;
         operator = '';
-        displayOperation.textContent = '';
-        displayNumber.textContent = '';
+        displayUp.textContent = '';
+        displayDown.textContent = '';
     }
+
+    e.preventDefault();
 
    }
    
    
 let num1, num2, operator = '';
 
-body.addEventListener('keydown', (e) => {calculator(e)}, false);
+window.addEventListener('keydown', (e) => { calculator(e) }, false);
+
+window.addEventListener('keyup', (e) => {
+    buttons[KEYS_CALCULATOR.indexOf(e.key)].classList.remove("simulate_click");
+}, false);
 
 buttons.forEach((button) => {
-        button.addEventListener('click', (e) => {calculator(e)}, false);
+        button.addEventListener('click', (e) => { calculator(e) }, false);
     });
