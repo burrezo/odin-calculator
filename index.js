@@ -3,25 +3,28 @@ function add(a, b){
 }
 
 function substract(a, b){
-    return a - b;
+    return Number(a) - Number(b);
 }
 
 function multiply(a, b){
-    return a * b;
+    return Number(a) * Number(b);
 }
 
 function divide(a, b){
-    return a / b;
+    return Number(a) / Number(b);
 }
 
 function operate(func, a, b){
-    if((func(a,b) * 10000).toString().match(/\./)) return func(a,b).toFixed(4);
-    return func(a,b);
+    if((func(a,b) * 10000).toString().match(/\./)) return Number(func(a,b).toFixed(4));
+    return Number(func(a,b));
 }
 
 function deleteLast(numberString){
+    if(numberString === '') return;
+
     let numberSplitted = numberString.split('');
     numberSplitted.splice(numberString.length-1,1);
+    if(numberSplitted[numberSplitted.length-1] === '.') numberSplitted.pop();
     return numberSplitted.join('');
 }
 
@@ -95,12 +98,16 @@ function calculator(e) {
         displayDown.textContent = deleteLast(displayDown.textContent);
         num1 = Number(displayDown.textContent);
 
+    } else if(keyPushed.match(/\-/) && displayDown.textContent === ''){
+    
+        displayDown.textContent += keyPushed;
+    
     } else if(keyPushed.match(/[\+\-*\/Enter]/)){
     
         if(num1 === undefined) num1 = Number(displayDown.textContent);
         
-        else {
-
+        else if(keyPushed.match(/Enter/)) {
+            
             num2 = Number(displayDown.textContent);
             if (operator === '+') num1 = operate(add, num1, num2);
             else if (operator === '-') num1 = operate(substract, num1, num2);
@@ -147,7 +154,9 @@ let num1, num2, operator = '';
 window.addEventListener('keydown', (e) => { calculator(e) }, false);
 
 window.addEventListener('keyup', (e) => {
-    buttons[KEYS_CALCULATOR.indexOf(e.key)].classList.remove("simulate_click");
+    if (KEYS_CALCULATOR.includes(e.key)) {
+        buttons[KEYS_CALCULATOR.indexOf(e.key)].classList.remove("simulate_click");
+    }
 }, false);
 
 buttons.forEach((button) => {
